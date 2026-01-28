@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recipe App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            padding: 10px 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>🍽 Recipe List</h2>
+
+<button onclick="loadRecipes()">Load Recipes</button>
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Cuisine</th>
+            <th>Rating</th>
+            <th>Total Time</th>
+            <th>Serves</th>
+        </tr>
+    </thead>
+    <tbody id="recipeTable">
+    </tbody>
+</table>
+
+<script>
+function loadRecipes() {
+    fetch("http://127.0.0.1:8000/api/recipes?page=1&limit=10")
+        .then(response => response.json())
+        .then(data => {
+            const table = document.getElementById("recipeTable");
+            table.innerHTML = "";
+
+            data.data.forEach(recipe => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${recipe[2]}</td>
+                    <td>${recipe[1]}</td>
+                    <td>${recipe[3] ?? "N/A"}</td>
+                    <td>${recipe[6] ?? "N/A"}</td>
+                    <td>${recipe[9]}</td>
+                `;
+
+                table.appendChild(row);
+            });
+        })
+        .catch(error => {
+            alert("Error loading recipes");
+            console.error(error);
+        });
+}
+</script>
+
+</body>
+</html>
