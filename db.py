@@ -4,7 +4,7 @@ import psycopg2
 conn = psycopg2.connect(
     dbname="recipes_db",
     user="postgres",
-    password="srihari",
+    password="YOUR PASSWORD",
     host="localhost",
     port="5432"
 )
